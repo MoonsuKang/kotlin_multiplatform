@@ -1,4 +1,4 @@
-package com.river.kmp.utils
+package com.river.kmp.core.utils
 
 object DateUtil {
     fun getCurrentDateMessage(): String {
