@@ -54,6 +54,7 @@ kotlin {
             api(libs.ktor.client.content.negotiation)
             api(libs.ktor.serialization.json)
             api(libs.ktor.client.logging)
+            api(libs.koin.core)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
