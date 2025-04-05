@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.nativecoroutines)
 }
 
 kotlin {
@@ -21,6 +22,12 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget>().all {
+        binaries.all {
+            freeCompilerArgs += listOf("-Xg0")
+        }
+    }
+
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
@@ -30,13 +37,30 @@ kotlin {
         framework {
             baseName = "shared"
             isStatic = true
+
+            export(libs.kmp.nativecoroutines.core)
+            export(libs.kotlinx.serialization.json)
+            export(libs.kotlinx.coroutines.core)
         }
     }
-    
+
     sourceSets {
         commonMain.dependencies {
-            //put your multiplatform dependencies here
-            implementation(libs.kotlinx.serialization.json)
+            api(libs.kotlinx.serialization.json)
+            api(libs.kotlinx.coroutines.core)
+            api(libs.kmp.nativecoroutines.core)
+            api(libs.ktor.client.core)
+            api(libs.ktor.client.json)
+            api(libs.ktor.client.content.negotiation)
+            api(libs.ktor.serialization.json)
+            api(libs.ktor.client.logging)
+        }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

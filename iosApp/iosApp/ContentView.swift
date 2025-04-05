@@ -1,14 +1,29 @@
 import SwiftUI
+
+
+import SwiftUI
 import shared
 
-
 struct ContentView: View {
-    var body: some View {
-        let user = User(id: 1, name: "Alice", email: "alice@example.com")
-        let message = DateUtil().getCurrentDateMessage()
+    @StateObject private var observable = UserObservable()
 
-        return Text("User: \(user.name), Email: \(user.email)\n\(message)")
-            .padding()
+    var body: some View {
+        NavigationView {
+            List(observable.users, id: \.id) { user in
+                VStack(alignment: .leading) {
+                    Text(user.name)
+                        .font(.headline)
+                    Text(user.email)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+                .padding(.vertical, 4)
+            }
+            .navigationTitle("Users")
+        }
+        .onAppear {
+            observable.loadUsers()
+        }
     }
 }
 
