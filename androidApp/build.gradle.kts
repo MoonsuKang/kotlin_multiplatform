@@ -17,13 +17,11 @@ android {
     buildFeatures {
         compose = true
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+
+    packaging.resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
+
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
         }
     }
@@ -31,16 +29,18 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 dependencies {
     implementation(projects.shared)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
+    implementation(libs.compose.ui.tooling.preview)
     implementation(libs.androidx.activity.compose)
     debugImplementation(libs.compose.ui.tooling)
 }
