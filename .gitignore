@@ -1,10 +1,66 @@
-*.iml
-.gradle
-.idea
+# ------------------------------
+# Kotlin Multiplatform .gitignore
+# ------------------------------
+
+### General ###
 .DS_Store
-build
-captures
-.externalNativeBuild
-.cxx
-local.properties
-xcuserdata
+*.log
+*.iml
+*.hprof
+*.swp
+*.tmp
+*.orig
+*.rej
+*.pyc
+*.lock
+
+### Gradle ###
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+### Kotlin ###
+.idea/
+*.kotlin_module
+
+### Android ###
+*.apk
+*.ap_
+*.dex
+*.class
+*.so
+*.jar
+*.keystore
+/captures/
+/local.properties
+/androidApp/local.properties
+
+### iOS ###
+iosApp/Pods/
+iosApp/Podfile.lock
+iosApp/.DS_Store
+iosApp/build/
+iosApp/DerivedData/
+iosApp/*.xcworkspace
+iosApp/*.xcodeproj/project.xcworkspace/xcuserdata/
+iosApp/*.xcodeproj/xcuserdata/
+*.xcuserstate
+
+### Xcode specific ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+
+### KMP-specific ###
+*.cocoapods/
+shared/build/
+shared/.gradle/
+
+### Others ###
+/.korge/
+*.jks
+*.env
+.env.*
+
+### macOS ###
+__MACOSX/
