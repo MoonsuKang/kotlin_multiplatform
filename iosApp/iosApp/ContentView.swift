@@ -9,19 +9,13 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            List(observable.users, id: \.id) { user in
+            List(observable.users, id: \ .id) { user in
                 VStack(alignment: .leading) {
-                    Text(user.name)
-                        .font(.headline)
-                    Text(user.email)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
+                    Text(user.name).font(.headline)
+                    Text(user.email).font(.subheadline).foregroundColor(.gray)
                 }
-                .padding(.vertical, 4)
-            }
-            .navigationTitle("Users")
-        }
-        .onAppear {
+            }.navigationTitle("Users")
+        }.onAppear {
             observable.loadUsers()
         }
     }

@@ -41,6 +41,7 @@ kotlin {
             export(libs.kmp.nativecoroutines.core)
             export(libs.kotlinx.serialization.json)
             export(libs.kotlinx.coroutines.core)
+            export(libs.koin.core)
         }
     }
 
@@ -54,6 +55,7 @@ kotlin {
             api(libs.ktor.client.content.negotiation)
             api(libs.ktor.serialization.json)
             api(libs.ktor.client.logging)
+            api(libs.koin.core)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)

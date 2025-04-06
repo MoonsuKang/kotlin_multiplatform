@@ -18,10 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.river.kmp.di.SharedUseCaseProvider
+import com.river.kmp.data.api.UserApi
+import com.river.kmp.data.repositoryimpl.UserRepositoryImpl
+import com.river.kmp.domain.usecase.GetUsersUseCase
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun UserListScreen(viewModel: UserViewModel) {
+fun UserListScreen(viewModel: UserViewModel = koinViewModel()) {
     val users by viewModel.users.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -33,7 +36,6 @@ fun UserListScreen(viewModel: UserViewModel) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-
         Text(
             text = "User List",
             style = MaterialTheme.typography.titleLarge,
@@ -52,7 +54,7 @@ fun UserListScreen(viewModel: UserViewModel) {
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(users) { user ->
-                    UserItem(user)
+                    Text("👤 ${user.name} - ${user.email}")
                 }
             }
         }
@@ -65,7 +67,9 @@ fun DefaultPreview() {
     MyApplicationTheme {
         UserListScreen(
             viewModel = UserViewModel(
-                getUsersUseCase = SharedUseCaseProvider.provideGetUsersUseCase()
+                getUsersUseCase = GetUsersUseCase(
+                    repository = UserRepositoryImpl(UserApi())
+                )
             )
         )
     }

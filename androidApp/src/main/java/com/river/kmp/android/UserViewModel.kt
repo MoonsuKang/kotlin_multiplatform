@@ -6,6 +6,7 @@ import com.river.kmp.domain.model.User
 import com.river.kmp.domain.usecase.GetUsersUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class UserViewModel(
@@ -13,12 +14,11 @@ class UserViewModel(
 ) : ViewModel() {
 
     private val _users = MutableStateFlow<List<User>>(emptyList())
-    val users: StateFlow<List<User>> = _users
+    val users: StateFlow<List<User>> = _users.asStateFlow()
 
     fun loadUsers() {
         viewModelScope.launch {
-            val result = getUsersUseCase()
-            _users.value = result
+            _users.value = getUsersUseCase()
         }
     }
 }

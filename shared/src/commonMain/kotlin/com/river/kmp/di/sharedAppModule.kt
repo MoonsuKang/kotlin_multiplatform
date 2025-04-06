@@ -4,11 +4,10 @@ import com.river.kmp.data.api.UserApi
 import com.river.kmp.data.repositoryimpl.UserRepositoryImpl
 import com.river.kmp.domain.repository.UserRepository
 import com.river.kmp.domain.usecase.GetUsersUseCase
+import org.koin.dsl.module
 
-object SharedUseCaseProvider {
-    fun provideGetUsersUseCase(): GetUsersUseCase {
-        val api = UserApi()
-        val repository: UserRepository = UserRepositoryImpl(api)
-        return GetUsersUseCase(repository)
-    }
+val sharedAppModule = module {
+    single { UserApi() }
+    single<UserRepository> { UserRepositoryImpl(get()) }
+    factory { GetUsersUseCase(get()) }
 }
