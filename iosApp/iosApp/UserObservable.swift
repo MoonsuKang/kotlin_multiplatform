@@ -12,19 +12,13 @@ import Combine
 
 @MainActor
 class UserObservable: ObservableObject {
-    private let getUsersUseCase = SharedUseCaseProvider().provideGetUsersUseCase()
+    private let useCase = GetUsersUseCase(repository: UserRepositoryImpl(api: UserApi()))
 
     @Published var users: [User] = []
 
     func loadUsers() {
         Task {
-            do {
-                let result = try await getUsersUseCase.invoke()
-                self.users = result
-            } catch {
-                print("failed to load users: \(error)")
-            }
+            self.users = try await useCase.invoke()
         }
     }
 }
-
