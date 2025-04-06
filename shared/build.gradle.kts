@@ -41,6 +41,7 @@ kotlin {
             export(libs.kmp.nativecoroutines.core)
             export(libs.kotlinx.serialization.json)
             export(libs.kotlinx.coroutines.core)
+            export(libs.koin.core)
         }
     }
 
